@@ -1,0 +1,21 @@
+.tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    width: 100%;
+    padding: 0;
+
+    &__item {
+        margin: 10px;
+        padding: 10px;
+        color: black;
+        font-size: 1rem;
+
+        border-bottom: 1px solid transparent;
+    }
+
+    &__item:hover {
+        border-bottom: 1px solid black;
+    }
+}
