@@ -6,8 +6,7 @@ import './layout.scss';
 export default class Layout extends React.Component {
 
     static propTypes = {
-        type: PropTypes.string,
-        children: PropTypes.element
+        type: PropTypes.string
     }
 
     render() {

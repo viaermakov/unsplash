@@ -3,18 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { fetchPhoto } from 'src/actions'
+import { fetchAllPhotos } from 'src/actions/feed';
+import { getAllPhotos } from 'src/reducers/feed/selectors';
 
 import Feed from 'src/components/pages/feed';
 import AppPage from 'src/components/blocks/app';
 
-//import { getRandomPhoto } from 'src/reducers/app/selectors';
+
 
 
 class FeedContainer extends Component {
 
     componentDidMount() {
-
+        const { actions: { onFetchAllPhotos } } = this.props;
+        //onFetchAllPhotos(); 
     }
 
     render() {
@@ -27,18 +29,18 @@ class FeedContainer extends Component {
 }
 
 
-// const mapStateToProps = (state) => {
-//     return {
-//         randomPhoto: getRandomPhoto(state),
-//     }
-// }
+const mapStateToProps = (state) => {
+    return {
+        photos: getAllPhotos(state),
+    }
+}
 
 
-// const mapDispatchToProps = (dispatch) => ({
-//     actions: {
-//         onFetchPhoto: () => dispatch(fetchPhoto())
-//     }
-// })
+const mapDispatchToProps = (dispatch) => ({
+    actions: {
+        onFetchAllPhotos: () => dispatch(fetchAllPhotos())
+    }
+})
 
 
-export default connect(null, null)(FeedContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(FeedContainer);

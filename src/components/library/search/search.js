@@ -12,26 +12,25 @@ export default class Search extends Component {
     }
 
     handlerOnKeyPress(event){
-        // on Enter
         if (event.key === 'Enter') {
             // event.preventDefault();
             this.handlerOnEnter(event);
         }
     }
 
-    handlerOnChange(event){
-        const { id, onChange } = this.props;
+    handlerOnChange = (event) => {
+        //const { id, onChange } = this.props;
         const { value } = event.target;
-
+        console.log(value);
         this.setState({ value })
-        onChange && onChange(id, value);
+        //onChange && onChange(id, value);
     }
 
-    handlerOnEnter(event){
-        const { id, onEnter } = this.props;
+    handlerOnEnter = (event) => {
+        //const { id, onEnter } = this.props;
         const { value } = event.target;
 
-        onEnter && onEnter(id, value);
+       // onEnter && onEnter(id, value);
     }
 
     render(){
@@ -44,7 +43,7 @@ export default class Search extends Component {
                 //className={ classes.component }
                 id={ id ? id : null }
                 value={ value ? value : '' }
-                placeholder={ placeholder || '' }
+                placeholder={ placeholder || 'Найти...' }
                 onChange={ this.handlerOnChange }
                 onKeyPress={ this.handlerOnKeyPress }
             />
