@@ -1,7 +1,5 @@
 import {
-    takeLatest
-} from 'redux-saga';
-import {
+    fork,
     take,
     put,
     call
@@ -18,14 +16,14 @@ import {
 import { feedActions } from 'src/constants/actions/feed';
 
 
-function* fetchAllPhotos() {
- 
+function* fetchAllPhotos(payload) {
+ console.log(payload);
     const {
-        data, error
-    } = yield call(fetchAllPhotosApi)
-
-    if (data) {
-        yield put(fetchAllPhotosSuccess(data))
+        response, error
+    } = yield call(fetchAllPhotosApi, payload)
+    console.log(response)
+    if (response) {
+        yield put(fetchAllPhotosSuccess(response))
     } else {
         yield put(fetchAllPhotosFailure(error))
     }
@@ -34,8 +32,8 @@ function* fetchAllPhotos() {
 export function* watchLoadAllPhotos() {
     try {
         while (true) {
-            yield take(feedActions.FETCH_PHOTOS_REQUEST);
-            yield call(fetchAllPhotos);
+            const { payload } = yield take(feedActions.FETCH_PHOTOS_REQUEST);
+            yield fork(fetchAllPhotos, payload);
         }
     }
     catch(error) {

@@ -8,11 +8,11 @@ import { allPhotosSchema } from 'src/schemas/feed';
 
 import { getData } from './api';
 
-export function fetchAllPhotosApi() {
+export function fetchAllPhotosApi(page) {
     const params = {
-        page: 1
+        page
     };
-
+    console.log(params);
     return getData({ url: '/photos', params })
         .then((response) => {
             const { data, error } = response;

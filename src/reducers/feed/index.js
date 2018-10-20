@@ -1,10 +1,13 @@
-import { Map, List } from 'immutable';
+import { Map, List, fromJS } from 'immutable';
 import { feedActions } from 'src/constants/actions/feed';
 
 const initialState = Map({
     isFetching: false,
     errorMessage: null,
-    photos: List([])
+    photos: Map({
+        IDs: List([]),
+        byID: Map({})
+    })
 })
 
 export default function feedReducer(state = initialState, action) {
@@ -12,12 +15,16 @@ export default function feedReducer(state = initialState, action) {
         case feedActions.FETCH_PHOTOS_REQUEST:
             return state
                 .set('isFetching', true);
-                
-        case feedActions.FETCH_PHOTOS_SUCCESS:
+
+        case feedActions.FETCH_PHOTOS_SUCCESS: {           
+            const IDs = state.getIn(['photos', 'IDs']);
+            const byID = state.getIn(['photos', 'byID']);
+
             return state
                 .set('isFetching', false)
-                .set('photos', action.payload);
-
+                .setIn(['photos', 'IDs'], IDs.concat(action.payload.IDs))
+                .setIn(['photos', 'byID'], byID.merge(action.payload.byID));
+        }
         case feedActions.FETCH_PHOTOS_FAILURE:
             return state
                 .set('isFetching', false)

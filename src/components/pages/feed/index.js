@@ -1,3 +1,3 @@
-import Feed from "./feed.jsx";
+import { Feed } from "./feed.jsx";
 
 export default Feed;

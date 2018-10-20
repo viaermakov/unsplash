@@ -1,24 +1,9 @@
-.feed {
-    &__item {
-        border: 1px solid black;
-        height: 700px;
+.feed__item {
+    width: 400px;
+    margin: 10px 0;
+    
+    &__content__img {
+        height: 100%;
         width: 100%;
-
-        &__header {
-
-        }
-
-        &__content {
-            height: 600px;
-
-            &__img {
-                height: 100%;
-                width: 100%;
-            }
-        }
-
-        &__footer {
-            
-        }
     }
 }

@@ -1,0 +1,21 @@
+.hover {
+    position: relative;
+    
+    &:hover &__no-hover {
+        opacity: 0.9;
+    }
+    &:hover &__hover {
+        opacity: 1;
+    }
+    &__hover {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        opacity: 0;
+        transition: .3s;
+    }
+    &__no-hover {
+        opacity: 1;
+    }
+}

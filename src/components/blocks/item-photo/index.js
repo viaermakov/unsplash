@@ -1,3 +1,3 @@
-import ItemPhoto from './item-photo';
+import { ItemPhoto } from './item-photo';
 
 export default ItemPhoto;
