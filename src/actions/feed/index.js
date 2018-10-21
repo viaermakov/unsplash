@@ -1,10 +1,11 @@
 import { feedActions } from 'src/constants/actions/feed';
 
-export function fetchAllPhotos(page) {
+export function fetchAllPhotos(page, typeOrder) {
     return {
         type: feedActions.FETCH_PHOTOS_REQUEST,
         payload: {
-            page
+            page,
+            typeOrder
         }
     }
 }
@@ -24,11 +25,11 @@ export function fetchAllPhotosFailure(error) {
     }
 }
 
-export function fetchOtherOrder(order) {
+export function fetchOtherOrder(typeOrder) {
     return {
         type: feedActions.FETCH_OTHER_ORDER_REQUEST,
         payload: {
-            order
+            typeOrder
         }
     }
 }

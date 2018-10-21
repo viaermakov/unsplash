@@ -20,6 +20,7 @@ import { feedActions } from 'src/constants/actions/feed';
 
 
 function* fetchAllPhotos(payload) {
+    console.log(payload);
     const {
         response, error
     } = yield call(fetchAllPhotosApi, payload)

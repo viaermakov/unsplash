@@ -3,10 +3,10 @@ import { allPhotosSchema } from 'src/schemas/feed';
 
 import { getData } from './api';
 
-export function fetchAllPhotosApi({ page, order }) {
+export function fetchAllPhotosApi({ page, typeOrder }) {
     const params = {
         page,
-        order_by: `${order}`
+        order_by: `${typeOrder}`
     };
 
     return getData({ url: `/photos`, params })

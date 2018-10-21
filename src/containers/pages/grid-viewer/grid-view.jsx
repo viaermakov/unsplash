@@ -14,7 +14,8 @@ import AppPage from 'src/components/blocks/app';
 class GridViewerContainer extends Component {
 
     state = {
-        page: 1
+        page: 1,
+        typeOrder: "latest"
     }
 
     componentDidMount() {
@@ -32,16 +33,18 @@ class GridViewerContainer extends Component {
 
     onScroll = () => {
         const { actions: { onFetchAllPhotos } } = this.props;
+        const { page, typeOrder} = this.state;
 
         if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 300)
             && this.props.photos.length > 0 && !this.props.status.isFetching) {
             this.setState((prevProps) => ({ page: prevProps.page += 1 }));
-            onFetchAllPhotos(this.state.page + 1)
+            onFetchAllPhotos(page + 1, typeOrder)
         }
     }
 
     sortOrderBy = (type) => {
         const { actions: { onFetchOtherOrder } } = this.props;
+        this.setState({typeOrder: type})
         onFetchOtherOrder(type);
     }
 
@@ -66,8 +69,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     actions: {
-        onFetchAllPhotos: (page) => dispatch(fetchAllPhotos(page)),
-        onFetchOtherOrder: (order) => dispatch(fetchOtherOrder(order))
+        onFetchAllPhotos: (page, typeOrder) => dispatch(fetchAllPhotos(page, typeOrder)),
+        onFetchOtherOrder: (typeOrder) => dispatch(fetchOtherOrder(typeOrder))
     }
 })
 
