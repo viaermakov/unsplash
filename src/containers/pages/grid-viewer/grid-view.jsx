@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { fetchAllPhotos } from 'src/actions/feed';
+import { fetchAllPhotos, fetchOtherOrder } from 'src/actions/feed';
 import { getAllPhotos, getPhotosLoadingStatus } from 'src/reducers/feed/selectors';
 
+import SortedHeader from 'src/components/blocks/sorted-toolbar';
 import Feed from 'src/components/pages/feed';
 import AppPage from 'src/components/blocks/app';
 
@@ -21,6 +22,7 @@ class GridViewerContainer extends Component {
         const { page } = this.state;
 
         onFetchAllPhotos(page);
+
         window.addEventListener('scroll', this.onScroll, false);
     }
 
@@ -29,19 +31,24 @@ class GridViewerContainer extends Component {
     }
 
     onScroll = () => {
-        // console.log(this.props.status);
-        // console.log(this.props.status.isFetching);
+        const { actions: { onFetchAllPhotos } } = this.props;
+
         if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 300)
             && this.props.photos.length > 0 && !this.props.status.isFetching) {
             this.setState((prevProps) => ({ page: prevProps.page += 1 }));
-            this.props.actions.onFetchAllPhotos(this.state.page + 1)
+            onFetchAllPhotos(this.state.page + 1)
         }
+    }
+
+    sortOrderBy = (type) => {
+        const { actions: { onFetchOtherOrder } } = this.props;
+        onFetchOtherOrder(type);
     }
 
     render() {
         return (
             <AppPage>
-                {/* <SortedHeader /> */}
+                <SortedHeader sortOrderBy={this.sortOrderBy} />
                 <Feed {...this.props} />
             </AppPage>
         );
@@ -59,7 +66,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     actions: {
-        onFetchAllPhotos: (page) => dispatch(fetchAllPhotos(page))
+        onFetchAllPhotos: (page) => dispatch(fetchAllPhotos(page)),
+        onFetchOtherOrder: (order) => dispatch(fetchOtherOrder(order))
     }
 })
 

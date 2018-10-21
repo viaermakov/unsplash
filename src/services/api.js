@@ -23,7 +23,7 @@ export function getData({ url, params, headers}) {
 
 export function postData({ url, headers, data}) {
     return axios({
-            url: `${API_ROOT}${$url}`,
+            url: `${API_ROOT}${url}`,
             timeout: 10000,
             method: 'post',
             headers: {

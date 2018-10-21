@@ -8,20 +8,22 @@ import {
 import {
     fetchAllPhotosApi
 } from "src/services/api.feed";
+
 import {
     fetchAllPhotosSuccess,
     fetchAllPhotosFailure,
-}  from 'src/actions/feed';
+    fetchOtherOrderPhotosSuccess,
+    fetchOtherOrderPhotosFailure
+} from 'src/actions/feed';
 
 import { feedActions } from 'src/constants/actions/feed';
 
 
 function* fetchAllPhotos(payload) {
- console.log(payload);
     const {
         response, error
     } = yield call(fetchAllPhotosApi, payload)
-    console.log(response)
+
     if (response) {
         yield put(fetchAllPhotosSuccess(response))
     } else {
@@ -30,13 +32,28 @@ function* fetchAllPhotos(payload) {
 }
 
 export function* watchLoadAllPhotos() {
-    try {
-        while (true) {
-            const { payload } = yield take(feedActions.FETCH_PHOTOS_REQUEST);
-            yield fork(fetchAllPhotos, payload);
-        }
+    while (true) {
+        const { payload } = yield take(feedActions.FETCH_PHOTOS_REQUEST);
+        yield fork(fetchAllPhotos, payload);
     }
-    catch(error) {
-        console.error("error in saga", error)
+}
+
+
+function* fetchOtherOrder(order) {
+    const {
+        response, error
+    } = yield call(fetchAllPhotosApi, order)
+
+    if (response) {
+        yield put(fetchOtherOrderPhotosSuccess(response))
+    } else {
+        yield put(fetchOtherOrderPhotosFailure(error))
+    }
+}
+
+export function* watchOtherOrder() {
+    while (true) {
+        const { payload } = yield take(feedActions.FETCH_OTHER_ORDER_REQUEST);
+        yield fork(fetchOtherOrder, payload);
     }
 }

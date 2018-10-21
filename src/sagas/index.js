@@ -1,9 +1,13 @@
 import {
     fork,
+    all
 } from 'redux-saga/effects'
 
-import { watchLoadAllPhotos } from './feed';
+import { watchLoadAllPhotos, watchOtherOrder } from './feed';
 
 export default function* rootSaga() {
-    yield fork(watchLoadAllPhotos)
+    yield all([
+        fork(watchLoadAllPhotos),
+        fork(watchOtherOrder),
+    ])
 }
