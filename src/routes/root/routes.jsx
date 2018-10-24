@@ -3,7 +3,7 @@ import React from 'react';
 
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
-import GridViewContainer from 'src/containers/pages/grid-viewer';
+import GridViewContainer from 'src/containers/pages/feed';
 
 const Routes = () => (
     <BrowserRouter>

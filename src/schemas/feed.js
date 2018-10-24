@@ -6,7 +6,7 @@ const allPhotoSchema = new schema.Entity('items', {}, {
             id: entity.id,
             label: entity.description || "",
             likes: entity.likes,
-            url: entity.urls.full,
+            url: entity.urls.regular,
             avatar: entity.user.profile_image.small,
             user: entity.user.username
         }

@@ -1,0 +1,77 @@
+.modal-view {
+    position: relative;
+    
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        height: 48px;
+        width: 100%;
+
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 1rem;
+
+        &__avatar {
+            display: inline-block;
+            height: 32px;
+            width: 32px;
+            margin: 0 10px 0 0;
+            border-radius: 50%;
+        }
+
+        &__user {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            height: 100%;
+            margin: 0 10px;
+        }
+
+        &__desc {
+            margin-right: 10px;
+            color: gray;
+        }
+    }
+
+    &__content {
+        &__img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+    &__stat {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        padding: 5px 15px;
+        font-size: 1rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    &__related {
+        position: relative;
+        padding: 5px 0px;
+        margin: 40px 0;
+
+        &__label {
+            padding: 0 15px;
+            font-size: 1.3rem;
+        }
+
+        &__block-images {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        
+        &__img {
+            width: 320px;
+            height: 100%;
+            margin: 15px 0;
+        }
+    }
+}

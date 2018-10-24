@@ -22,8 +22,8 @@ export default function feedReducer(state = initialState, action) {
 
             return state
                 .set('isFetching', false)
-                .setIn(['photos', 'IDs'], IDs.concat(action.payload.IDs))
-                .setIn(['photos', 'byID'], byID.merge(action.payload.byID));
+                .setIn(['photos', 'IDs'], IDs.concat(fromJS(action.payload.IDs)))
+                .setIn(['photos', 'byID'], byID.merge(fromJS(action.payload.byID)));
         }
 
         case feedActions.FETCH_PHOTOS_FAILURE:

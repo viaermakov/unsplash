@@ -9,9 +9,11 @@ import { getAllPhotos, getPhotosLoadingStatus } from 'src/reducers/feed/selector
 import SortedHeader from 'src/components/blocks/sorted-toolbar';
 import Feed from 'src/components/pages/feed';
 import AppPage from 'src/components/blocks/app';
+import { Spinner } from 'src/components/library/spinner/spinner';
+import FeedRoutes from 'src/routes/root/feed';
 
 
-class GridViewerContainer extends Component {
+class FeedContainer extends Component {
 
     state = {
         page: 1,
@@ -20,9 +22,9 @@ class GridViewerContainer extends Component {
 
     componentDidMount() {
         const { actions: { onFetchAllPhotos } } = this.props;
-        const { page } = this.state;
+        const { page, typeOrder } = this.state;
 
-        onFetchAllPhotos(page);
+        onFetchAllPhotos(page, typeOrder);
 
         window.addEventListener('scroll', this.onScroll, false);
     }
@@ -31,12 +33,17 @@ class GridViewerContainer extends Component {
         window.removeEventListener('scroll', this.onScroll, false);
     }
 
+    handlerOpenModal = (id) => {
+        const { history } = this.props;
+        history.push(`feed/${id}`);
+    }
+
     onScroll = () => {
-        const { actions: { onFetchAllPhotos } } = this.props;
-        const { page, typeOrder} = this.state;
+        const { actions: { onFetchAllPhotos }, photos, status: { isFetching } } = this.props;
+        const { page, typeOrder } = this.state;
 
         if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 300)
-            && this.props.photos.length > 0 && !this.props.status.isFetching) {
+            && photos.length > 0 && !isFetching) {
             this.setState((prevProps) => ({ page: prevProps.page += 1 }));
             onFetchAllPhotos(page + 1, typeOrder)
         }
@@ -44,16 +51,24 @@ class GridViewerContainer extends Component {
 
     sortOrderBy = (type) => {
         const { actions: { onFetchOtherOrder } } = this.props;
-        this.setState({typeOrder: type})
+        this.setState({ typeOrder: type })
         onFetchOtherOrder(type);
     }
 
+
     render() {
+        const { photos, status: { isFetching } } = this.props;
         return (
-            <AppPage>
-                <SortedHeader sortOrderBy={this.sortOrderBy} />
-                <Feed {...this.props} />
-            </AppPage>
+            <React.Fragment>
+                <AppPage>
+                    <SortedHeader sortOrderBy={this.sortOrderBy} />
+                    {photos.length > 0
+                        ? <Feed {...this.props} handlerOpenModal={this.handlerOpenModal} />
+                        : <Spinner withBackdrop={true} />}
+                    {isFetching && photos.length !== 0 && <Spinner />}
+                </AppPage>
+                <FeedRoutes />
+            </React.Fragment>
         );
     }
 }
@@ -75,4 +90,4 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(GridViewerContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FeedContainer));
