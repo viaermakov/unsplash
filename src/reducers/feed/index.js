@@ -33,12 +33,13 @@ export default function feedReducer(state = initialState, action) {
 
         case feedActions.FETCH_OTHER_ORDER_REQUEST:
             return state
-                .set('isFetching', true);
+                .set('isFetching', true)
+                .set('photos', List([]));
 
         case feedActions.FETCH_OTHER_ORDER_SUCCESS: 
             return state
                 .set('isFetching', false)
-                .setIn(['photos'], fromJS(action.payload))
+                .set('photos', fromJS(action.payload))
 
         case feedActions.FETCH_OTHER_ORDER_FAILURE:
             return state

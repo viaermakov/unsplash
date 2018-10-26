@@ -1,5 +1,5 @@
-//import { normalizeData } from 'src/schemas';
-//import { chosenPhotoSchema } from 'src/schemas/view-photo';
+import { normalizeData } from 'src/schemas';
+import { relatedPhotosSchema } from 'src/schemas/view-photo';
 
 import { getData } from './api';
 
@@ -14,12 +14,29 @@ export function fetchChosenPhotoApi({ id }) {
                 likes: data.likes,
                 username: data.user.username,
                 portfolio: data.user.portfolio_url,
-                location:  data.location ? data.location.title : "",
+                location:  data.location ? data.location.title : "Unknown",
                 views: data.views,
+                exif: data.exif.model,
                 created: data.created_at
             }
 
             return { response: computedData};
+        })
+        .catch((error) => { error })
+}
+
+export function fetchRelatedPhotosApi() {
+    const params = {
+        count: 6
+    }
+    return getData({ url: `/photos/random`, params })
+        .then((response) => {         
+            const { data } = response;
+            const normalizedData = normalizeData(data, relatedPhotosSchema);
+            
+            return { 
+                response: normalizedData 
+            };
         })
         .catch((error) => { error })
 }

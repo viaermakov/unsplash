@@ -1,5 +1,6 @@
 .hover {
     position: relative;
+    margin: 15px 0;
     
     &:hover &__no-hover {
         opacity: 0.9;

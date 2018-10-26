@@ -64,7 +64,7 @@ class FeedContainer extends Component {
                     <SortedHeader sortOrderBy={this.sortOrderBy} />
                     {photos.length > 0
                         ? <Feed {...this.props} handlerOpenModal={this.handlerOpenModal} />
-                        : <Spinner withBackdrop={true} />}
+                        : <Spinner />}
                     {isFetching && photos.length !== 0 && <Spinner />}
                 </AppPage>
                 <FeedRoutes />

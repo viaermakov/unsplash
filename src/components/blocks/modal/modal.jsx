@@ -12,7 +12,7 @@ export const Modal = ({ children, handlerOnClose }) => {
     }
     return (
         <Layout type="overlay" onClick={closeModal}>
-            <div className="modal">
+            <div id="modal" className="modal">
                 {children}
             </div>
         </Layout>

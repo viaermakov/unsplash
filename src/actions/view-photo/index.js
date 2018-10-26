@@ -24,6 +24,27 @@ export function fetchChosenPhotoFailure(error) {
     }
 }
 
+export function fetchRelatedPhotos() {
+    return {
+        type: viewPhotoActions.FETCH_RELATED_PHOTOS_REQUEST
+    }
+}
+
+export function fetchRelatedPhotosSuccess(payload) {
+    return {
+        type: viewPhotoActions.FETCH_RELATED_PHOTOS_SUCCESS,
+        payload
+    }
+}
+export function fetchRelatedPhotosFailure(error) {
+    return {
+        type: viewPhotoActions.FETCH_RELATED_PHOTOS_FAILURE,
+        payload: {
+            error
+        }
+    }
+}
+
 export function closeModal() {
     return {
         type: viewPhotoActions.CLOSE_MODAL,

@@ -1,0 +1,14 @@
+.modal-view__related {
+    &__block-images {
+        column-count: 3;
+        column-gap: 1em;
+        margin: 0 15px;
+    }
+    
+    &__img {
+        display: inline-block;
+        width: 320px;
+        height: auto;
+        //margin: 0 0 1em;
+    }
+}

@@ -11,8 +11,23 @@ const STATUSES = (state) => state.viewPhoto;
 
 export const getStatusesViewPhoto = createSelector(
     [STATUSES],
-    (viewPhoto) => ({
-        isFetching: viewPhoto.isFetching,
-        errorMessage: viewPhoto.errorMessage
-    })
+    (viewPhoto) => {
+        const view = viewPhoto.toJS();
+        return {
+            isFetching: view.isFetching,
+            errorMessage: view.errorMessage
+        }
+    }
+)
+
+const RELATED_PHOTOS = (state) => state.viewPhoto.get('relatedPhotos');
+
+export const getRelatedPhotos = createSelector(
+    [RELATED_PHOTOS],
+    (photos) => {
+        const currentPhotos = photos.toJS();
+        return currentPhotos && currentPhotos.IDs
+            ? currentPhotos.IDs.map(id => currentPhotos.byID[id])
+            : [];
+    }
 )
