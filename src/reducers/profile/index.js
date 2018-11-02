@@ -5,7 +5,7 @@ const initialState = Map({
     isFetching: false,
     errorMessage: null,
     userInfo: null,
-    photos: List([])
+    photos: List()
 })
 
 export default function profileReducer(state = initialState, action) {
@@ -18,7 +18,7 @@ export default function profileReducer(state = initialState, action) {
         case profileActions.FETCH_USER_SUCCESS: {
             return state
                 .set('isFetching', false)
-                .set('userInfo', fromJS(action.payload));
+                .set('userInfo', fromJS(action.payload.userInfo));
         }
 
         case profileActions.FETCH_USER_FAILURE:

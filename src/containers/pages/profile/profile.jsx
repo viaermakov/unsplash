@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-// import { fetchChosenPhoto, fetchRelatedPhotos, closeModal } from 'src/actions/profile';
-// import { getChosenPhoto, getStatusesViewPhoto, getRelatedPhotos } from 'src/reducers/profile/selectors';
+import { fetchUser, fetchUserPhotos } from 'src/actions/profile';
+import { getUserPhotos, getStatusesUser, getInfoUser } from 'src/reducers/profile/selectors';
 
+import { Spinner } from 'src/components/library/spinner/spinner';
 import AppPage from 'src/components/blocks/app';
 import Profile from 'src/components/pages/profile';
 
@@ -19,50 +20,72 @@ class ProfileContainer extends Component {
             onFetchRelatedPhotos: PropTypes.func
         }),
         match: PropTypes.object,
-        
+
     }
 
     componentDidMount() {
-        //const { actions: { onFetchChosenPhoto, onFetchRelatedPhotos }, match: { params } } = this.props;
-
-
+        const { actions: { onFetchUser, onFetchUserPhotos }, match: { params } } = this.props;
+        onFetchUser(params.id);
+        onFetchUserPhotos(params.id);
     }
 
-    componentDidUpdate(prevProps) {
-        
+    handlerOpenModal = (id) => {
+        const { history, match: { params } } = this.props;
+
+        const stateHistory = {
+            modal: true,
+            previousPage: "profile",
+            previousUser: params.id
+        }
+
+        history.push({
+            state: stateHistory,
+            pathname: `/photo/${id}`
+        });
     }
 
-    componentWillUnmount() {
-       
-    }
 
     render() {
+        const {
+            userInfo,
+            userPhotos,
+            statuses: { isFetching },
+            match: { params }
+        } = this.props;
+
         return (
             <AppPage>
-                    <Profile />
-                </AppPage>
-            
+                {
+                    !isFetching && userInfo
+                        ? <Profile
+                            userInfo={userInfo}
+                            userPhotos={userPhotos}
+                            id={params.id}
+                            handlerOpenModal={this.handlerOpenModal}
+                        />
+                        : <Spinner />
+                }
+            </AppPage>
         );
     }
 }
 
 
-// const mapStateToProps = (state) => {
-//     return {
-//         chosenPhoto: getChosenPhoto(state),
-//         status: getStatusesViewPhoto(state),
-//         relatedPhotos: getRelatedPhotos(state)
-//     }
-// }
+const mapStateToProps = (state) => {
+    return {
+        userInfo: getInfoUser(state),
+        statuses: getStatusesUser(state),
+        userPhotos: getUserPhotos(state)
+    }
+}
 
 
-// const mapDispatchToProps = (dispatch) => ({
-//     actions: {
-//         onFetchChosenPhoto: (id) => dispatch(fetchChosenPhoto(id)),
-//         onFetchRelatedPhotos: () => dispatch(fetchRelatedPhotos()),
-//         onCloseModal: () => dispatch(closeModal())
-//     }
-// })
+const mapDispatchToProps = (dispatch) => ({
+    actions: {
+        onFetchUser: (id) => dispatch(fetchUser(id)),
+        onFetchUserPhotos: (id) => dispatch(fetchUserPhotos(id))
+    }
+})
 
 
-export default withRouter(connect(null, null)(ProfileContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProfileContainer));

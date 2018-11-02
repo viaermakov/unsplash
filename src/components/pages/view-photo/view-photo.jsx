@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 
 import './view-photo.scss';
 import RelatedPhotos from 'src/components/blocks/related-photos';
@@ -17,7 +18,7 @@ export const ModalViewPhoto = ({ isIncreased, chosenPhoto, relatedPhotos, handle
             <header className="modal-view__header">
                 <section className="modal-view__header__user">
                     <img className="modal-view__header__avatar" src={chosenPhoto.avatar} alt={chosenPhoto.username} />
-                    <section >{chosenPhoto.username}</section>
+                    <section><Link className="modal-view__header__login" to={`/profile/${chosenPhoto.username}`}>{chosenPhoto.username}</Link></section>
                 </section>
                 <section className="modal-view__header__desc">
                     <span className="modal-view__header__desc__icon"></span>

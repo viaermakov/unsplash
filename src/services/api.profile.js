@@ -1,38 +1,46 @@
-import { normalizeData } from 'src/schemas';
-import { userPhotosSchema } from 'src/schemas/profile';
-
 import { getData } from './api';
 
 export function fetchUserApi({ id }) {
     return getData({ url: `/users/${id}` })
-        .then((response) => {         
+        .then((response) => {
+
             const { data } = response;
-            const computedData = {
+            const userInfo = {
                 id: data.id,
-                url: data.urls.regular,
-                avatar: data.user.profile_image.small,
-                likes: data.likes,
-                username: data.user.username,
-                portfolio: data.user.portfolio_url,
-                location:  data.location ? data.location.title : "Unknown",
-                views: data.views,
-                exif: data.exif.model,
-                created: data.created_at
+                avatar: data.profile_image.large,
+                bio: data.bio || '',
+                name: data.name,
+                portfolio: data.portfolio_url || '',
+                location: data.location ? data.location.title : 'Unknown',
+                followers: data.followers_count,
+                following: data.following_count
             }
 
-            return { response: computedData};
+            return {
+                response: {
+                    userInfo
+                }
+            };
         })
         .catch((error) => { error })
 }
 
-export function fetchUserPhotosApi({user}) {
-    return getData({ url: `/users/${user}/portfolio` })
-        .then((response) => {         
+export function fetchUserPhotosApi({ id }) {
+    return getData({ url: `/users/${id}/photos` })
+        .then((response) => {
             const { data } = response;
-            const normalizedData = normalizeData(data, userPhotosSchema);
-            
-            return { 
-                response: normalizedData 
+           
+            const photos = data.map((item) => {
+                return {
+                    id: item.id,
+                    label: item.description || '',
+                    likes: item.likes,
+                    url: item.urls.regular
+                }
+            })
+
+            return {
+                response: photos
             };
         })
         .catch((error) => { error })

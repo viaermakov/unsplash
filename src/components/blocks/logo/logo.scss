@@ -5,6 +5,13 @@
     width: 100%;
     text-align: right;
 
+    &__wrapper {
+        display: flex;
+        text-decoration: none;
+
+        cursor: pointer;
+    }
+
     &__label {
         font-family: 'Courier New', Courier, monospace;
         font-size: 1.2rem;

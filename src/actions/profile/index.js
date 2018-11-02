@@ -24,9 +24,12 @@ export function fetchUserFailure(error) {
     }
 }
 
-export function fetchUserPhotos() {
+export function fetchUserPhotos(id) {
     return {
-        type: profileActions.FETCH_USER_PHOTOS_REQUEST
+        type: profileActions.FETCH_USER_PHOTOS_REQUEST,
+        payload: {
+            id
+        }
     }
 }
 

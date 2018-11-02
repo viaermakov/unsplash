@@ -20,6 +20,7 @@ class ModalViewPhotoContainer extends Component {
             onFetchRelatedPhotos: PropTypes.func
         }),
         match: PropTypes.object,
+        location: PropTypes.object,
         status: PropTypes.shape({
             isFetching: PropTypes.bool,
             errorMessage: PropTypes.string
@@ -35,7 +36,7 @@ class ModalViewPhotoContainer extends Component {
     componentDidMount() {
         const { actions: { onFetchChosenPhoto, onFetchRelatedPhotos }, match: { params } } = this.props;
 
-        onFetchChosenPhoto(params.id);
+        onFetchChosenPhoto(params.idPhoto);
         onFetchRelatedPhotos();
 
         document.body.style.overflowY = "hidden";
@@ -44,10 +45,9 @@ class ModalViewPhotoContainer extends Component {
     componentDidUpdate(prevProps) {
         const { actions: { onFetchChosenPhoto, onFetchRelatedPhotos }, match: { params } } = this.props;
 
-        if (prevProps.match.params.id !== params.id) {
-            onFetchChosenPhoto(params.id);
+        if (prevProps.match.params.idPhoto !== params.idPhoto) {
+            onFetchChosenPhoto(params.idPhoto);
             onFetchRelatedPhotos();
-
         }
     }
 
@@ -55,17 +55,38 @@ class ModalViewPhotoContainer extends Component {
         document.body.style.overflowY = "auto";
     }
 
+    redirectToBack = () => {
+        const { history, location } = this.props;
+
+        if (location.state && location.state.previousPage === "profile") {
+            history.push( `/profile/${location.state.previousUser}`);
+        }
+        else {
+            history.push(`/feed`);
+        }
+    }
+
     handlerOnOpenModal = (id) => {
-        const { history } = this.props;
-        history.push(`/feed/${id}`);
+        const { history,  location } = this.props;
+
+        const historyState = {
+                previousUser: location.state.previousPage === "profile" && location.state.previousUser,
+                previousPage: location.state.previousPage, 
+                modal: true
+        }
+
+        history.push({
+            state: historyState,
+            pathname: `/photo/${id}`
+        });
 
         document.getElementById("modal").scrollIntoView(true);
     }
 
     handlerOnClose = () => {
-        const { history, actions: { onCloseModal } } = this.props;
+        const { actions: { onCloseModal } } = this.props;
         onCloseModal && onCloseModal();
-        history.push('/feed');
+        this.redirectToBack();
     }
 
     handlerIncreasePhoto = () => {

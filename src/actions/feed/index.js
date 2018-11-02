@@ -25,6 +25,31 @@ export function fetchAllPhotosFailure(error) {
     }
 }
 
+export function fetchMorePhotos(page, typeOrder) {
+    return {
+        type: feedActions.FETCH_MORE_PHOTOS_REQUEST,
+        payload: {
+            page,
+            typeOrder
+        }
+    }
+}
+
+export function fetchMorePhotosSuccess(payload) {
+    return {
+        type: feedActions.FETCH_MORE_PHOTOS_SUCCESS,
+        payload
+    }
+}
+export function fetchMorePhotosFailure(error) {
+    return {
+        type: feedActions.FETCH_MORE_PHOTOS_FAILURE,
+        payload: {
+            error
+        }
+    }
+}
+
 export function fetchOtherOrder(typeOrder) {
     return {
         type: feedActions.FETCH_OTHER_ORDER_REQUEST,

@@ -1,5 +1,5 @@
 .profile {
-    margin: 5px 10%;
+    margin: 5px 8%;
     &__header {
         position: relative;
         height: 30%;
@@ -8,20 +8,15 @@
 
     &__gallery {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         flex-wrap: wrap;
 
         width: 100%;
         margin: 50px 0 0 0;
         &__item {
             height: 100%;
-            width: 300px;
+            width: 320px;
             margin: 0px 0 20px 0;
-                
-            &__img {
-                height: 100%;
-                width: 100%;
-            }
         }
         
     }
@@ -51,6 +46,7 @@
         height: 100%;
         &__login {
             font-size: 1.5rem;
+            text-decoration: underline;
         }
         &__socia {
             display: flex;

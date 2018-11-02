@@ -16,7 +16,7 @@ import {
     fetchUserFailure,
     fetchUserPhotosSuccess,
     fetchUserPhotosFailure
-} from 'src/actions/view-photo';
+} from 'src/actions/profile';
 
 import { profileActions } from 'src/constants/actions/profile';
 
@@ -40,10 +40,10 @@ export function* watchLoadUser() {
     }
 }
 
-function* fetchUserPhotos() {
+function* fetchUserPhotos(payload) {
     const {
         response, error
-    } = yield call(fetchUserPhotosApi)
+    } = yield call(fetchUserPhotosApi, payload)
 
     if (response) {
         yield put(fetchUserPhotosSuccess(response))
@@ -54,7 +54,7 @@ function* fetchUserPhotos() {
 
 export function* watchLoadUserPhotos() {
     while (true) {
-        yield take(profileActions.FETCH_USER_PHOTOS_REQUEST);
-        const task = yield fork(fetchUserPhotos);
+        const { payload } = yield take(profileActions.FETCH_USER_PHOTOS_REQUEST);
+        const task = yield fork(fetchUserPhotos, payload);
     }
 }

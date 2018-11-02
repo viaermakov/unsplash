@@ -12,9 +12,17 @@ class HeaderContainer extends Component {
 
     }
 
+    handlerGoToHome = () => {
+        const { history, match: { params, url } } = this.props;
+
+        if (url.indexOf("feed") === -1) {
+            history.push(`/feed`);
+        }
+    }
+
     render() {
         return (
-            <Header {...this.props} />
+            <Header {...this.props} handlerGoToHome={this.handlerGoToHome} />
         );
     }
 }
@@ -34,4 +42,4 @@ class HeaderContainer extends Component {
 // })
 
 
-export default connect(null, null)(HeaderContainer);
+export default withRouter(connect(null, null)(HeaderContainer));

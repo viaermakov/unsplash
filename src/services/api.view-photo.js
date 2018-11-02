@@ -29,7 +29,7 @@ export function fetchRelatedPhotosApi() {
     const params = {
         count: 6
     }
-    return getData({ url: `/photos/random`, params })
+    return getData({ url: `/photos`, params })
         .then((response) => {         
             const { data } = response;
             const normalizedData = normalizeData(data, relatedPhotosSchema);

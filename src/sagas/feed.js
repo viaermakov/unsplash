@@ -13,14 +13,15 @@ import {
     fetchAllPhotosSuccess,
     fetchAllPhotosFailure,
     fetchOtherOrderPhotosSuccess,
-    fetchOtherOrderPhotosFailure
+    fetchOtherOrderPhotosFailure,
+    fetchMorePhotosSuccess,
+    fetchMorePhotosFailure
 } from 'src/actions/feed';
 
 import { feedActions } from 'src/constants/actions/feed';
 
 
 function* fetchAllPhotos(payload) {
-    console.log(payload);
     const {
         response, error
     } = yield call(fetchAllPhotosApi, payload)
@@ -39,7 +40,6 @@ export function* watchLoadAllPhotos() {
     }
 }
 
-
 function* fetchOtherOrder(order) {
     const {
         response, error
@@ -56,5 +56,24 @@ export function* watchOtherOrder() {
     while (true) {
         const { payload } = yield take(feedActions.FETCH_OTHER_ORDER_REQUEST);
         yield fork(fetchOtherOrder, payload);
+    }
+}
+
+function* fetchMorePhotos(order) {
+    const {
+        response, error
+    } = yield call(fetchAllPhotosApi, order)
+
+    if (response) {
+        yield put(fetchMorePhotosSuccess(response))
+    } else {
+        yield put(fetchMorePhotosFailure(error))
+    }
+}
+
+export function* watchMorePhotos() {
+    while (true) {
+        const { payload } = yield take(feedActions.FETCH_MORE_PHOTOS_REQUEST);
+        yield fork(fetchMorePhotos, payload);
     }
 }

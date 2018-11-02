@@ -4,7 +4,7 @@ const USER_INFO = (state) => state.profile.get('userInfo');
 
 export const getInfoUser = createSelector(
     [USER_INFO],
-    (user) => user ? user.toJS() : null
+    (user) => user && user.toJS()
 )
 
 const STATUSES = (state) => state.profile;
@@ -20,14 +20,9 @@ export const getStatusesUser = createSelector(
     }
 )
 
-const USER_PHOTOS = (state) => state.profile.get('photos');
+const USER_PHOTOS = (state) => state.profile.get('photos', []);
 
-export const getRelatedPhotos = createSelector(
+export const getUserPhotos = createSelector(
     [USER_PHOTOS],
-    (photos) => {
-        const currentPhotos = photos.toJS();
-        return currentPhotos && currentPhotos.IDs
-            ? currentPhotos.IDs.map(id => currentPhotos.byID[id])
-            : [];
-    }
+    (photos) => photos.toJS() 
 )
