@@ -1,7 +1,14 @@
 .modal {
     position: relative;
-    min-height: 750px;
-    width: 1050px;
     margin: auto;
     background: #fff;
+
+    &--full {
+        width: 100%;
+    }
+
+    &--default {
+        width: 1050px;
+        min-height: 750px;
+    }
 }

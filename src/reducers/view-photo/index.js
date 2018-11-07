@@ -5,7 +5,7 @@ const initialState = Map({
     isFetching: false,
     errorMessage: null,
     currentPhoto: null,
-    relatedPhotos: List([])
+    relatedPhotos: Map()
 })
 
 export default function viewPhotoReducer(state = initialState, action) {

@@ -7,18 +7,15 @@ import Header from 'src/containers/blocks/header';
 
 import './app.scss';
 
-export default class AppPage extends React.Component {
+export const AppPage = ({ children }) => (
+    <Layout type="main">
+        <Header />
+        <Layout type="center">
+            {children}
+        </Layout>
+    </Layout>
+)
 
-    render() {
-        const { children } = this.props;
-
-        return (
-            <Layout type="main">
-                <Header />
-                <Layout type="center">
-                    {children}
-                </Layout>
-            </Layout>
-        );
-    }
+AppPage.propTypes = {
+    children: PropTypes.node
 }

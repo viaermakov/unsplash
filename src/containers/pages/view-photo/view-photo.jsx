@@ -25,8 +25,9 @@ class ModalViewPhotoContainer extends Component {
             isFetching: PropTypes.bool,
             errorMessage: PropTypes.string
         }),
-        relatedPhotos: PropTypes.array,
-        chosenPhoto: PropTypes.object
+        relatedPhotos: PropTypes.object,
+        chosenPhoto: PropTypes.object,
+        isFull: PropTypes.bool
     }
 
     state = {
@@ -34,12 +35,14 @@ class ModalViewPhotoContainer extends Component {
     }
 
     componentDidMount() {
-        const { actions: { onFetchChosenPhoto, onFetchRelatedPhotos }, match: { params } } = this.props;
+        const { actions: { onFetchChosenPhoto, onFetchRelatedPhotos }, match: { params }, isFull } = this.props;
 
         onFetchChosenPhoto(params.idPhoto);
         onFetchRelatedPhotos();
 
-        document.body.style.overflowY = "hidden";
+        if(!isFull) { 
+            document.body.style.overflowY = "hidden"; 
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -58,8 +61,11 @@ class ModalViewPhotoContainer extends Component {
     redirectToBack = () => {
         const { history, location } = this.props;
 
-        if (location.state && location.state.previousPage === "profile") {
-            history.push( `/profile/${location.state.previousUser}`);
+        if (location.state && location.state.previousPage === 'profile') {
+            history.push(`/profile/${location.state.previousUser}`);
+        }
+        else if (location.state && location.state.previousPage === 'search') {
+            history.push(`/search/${location.state.query}`);
         }
         else {
             history.push(`/feed`);
@@ -67,12 +73,13 @@ class ModalViewPhotoContainer extends Component {
     }
 
     handlerOnOpenModal = (id) => {
-        const { history,  location } = this.props;
+        const { history, location, isFull } = this.props;
 
         const historyState = {
-                previousUser: location.state.previousPage === "profile" && location.state.previousUser,
-                previousPage: location.state.previousPage, 
-                modal: true
+            previousUser: !isFull || location.state.previousPage === 'profile' ? location.state.previousUser : null,
+            previousPage: !isFull ? location.state.previousPage : null,
+            modal: !isFull,
+            query: location.state.previousPage === 'search' &&  location.state.query
         }
 
         history.push({
@@ -80,7 +87,7 @@ class ModalViewPhotoContainer extends Component {
             pathname: `/photo/${id}`
         });
 
-        document.getElementById("modal").scrollIntoView(true);
+        document.getElementById('modal').scrollIntoView(true);
     }
 
     handlerOnClose = () => {
@@ -96,11 +103,13 @@ class ModalViewPhotoContainer extends Component {
     }
 
     render() {
-        const { status: { isFetching }, chosenPhoto, relatedPhotos } = this.props;
+        const { status: { isFetching }, chosenPhoto, relatedPhotos, isFull } = this.props;
         const { isIncreased } = this.state;
 
+        const type = isFull ? 'full' : 'default';
+
         return (
-            <Modal handlerOnClose={this.handlerOnClose}>
+            <Modal type={type} handlerOnClose={this.handlerOnClose}>
                 {
                     !isFetching && chosenPhoto
                         ? <ModalViewPhoto

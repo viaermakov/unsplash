@@ -11,16 +11,16 @@ import './feed.scss';
 export const Feed = ({ photos, handlerOpenModal }) => (
     <div className="feed">
         {
-            photos && photos.length > 0 && photos.map((photo) => {
+            photos && photos.IDs.length > 0 && photos.IDs.map((id) => {
                 return (
                     <Hover
-                        id={photo.id}
+                        id={photos.byID[id].id}
                         className="feed__item"
-                        hoverElement={<DescriptionPhoto photo={photo} />}
-                        key={photo.id}
+                        hoverElement={<DescriptionPhoto photo={photos.byID[id]} />}
+                        key={photos.byID[id].id}
                         onClick={handlerOpenModal}
                     >
-                        <ItemPhoto url={photo.url} user={photo.user} />
+                        <ItemPhoto url={photos.byID[id].url} user={photos.byID[id].user} />
                     </Hover>
                 );
             })
@@ -29,6 +29,6 @@ export const Feed = ({ photos, handlerOpenModal }) => (
 );
 
 Feed.propTypes = {
-    photos: PropTypes.array,
+    photos: PropTypes.object,
     handlerOpenModal: PropTypes.func
 }

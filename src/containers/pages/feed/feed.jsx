@@ -14,6 +14,19 @@ import { Spinner } from 'src/components/library/spinner/spinner';
 
 class FeedContainer extends Component {
 
+    static propTypes = {
+        photos: PropTypes.shape({
+            IDs: PropTypes.array,
+            byID: PropTypes.object
+        }),
+        status: PropTypes.shape({
+            isFetching: PropTypes.bool,
+            error: PropTypes.string
+        }),
+        history: PropTypes.object,
+        actions: PropTypes.object
+    }
+
     state = {
         page: 1,
         typeOrder: "latest"
@@ -65,18 +78,18 @@ class FeedContainer extends Component {
         const { photos, status: { isFetching } } = this.props;
 
         return (
-            <AppPage>
+            <React.Fragment>
                 <SortedHeader sortOrderBy={this.sortOrderBy} />
                 {
-                    photos.length > 0
+                    photos && photos.IDs.length > 0
                         ? <Feed {...this.props} handlerOpenModal={this.handlerOpenModal} />
                         : <Spinner />
                 }
                 {
-                    isFetching && photos.length !== 0
+                    isFetching && photos.IDs.length > 0
                     && <Spinner />
                 }
-            </AppPage>
+            </React.Fragment>
         );
     }
 }

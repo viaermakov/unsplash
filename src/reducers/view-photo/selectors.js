@@ -20,14 +20,9 @@ export const getStatusesViewPhoto = createSelector(
     }
 )
 
-const RELATED_PHOTOS = (state) => state.viewPhoto.get('relatedPhotos');
+const RELATED_PHOTOS = (state) => state.viewPhoto.get('relatedPhotos', null);
 
 export const getRelatedPhotos = createSelector(
     [RELATED_PHOTOS],
-    (photos) => {
-        const currentPhotos = photos.toJS();
-        return currentPhotos && currentPhotos.IDs
-            ? currentPhotos.IDs.map(id => currentPhotos.byID[id])
-            : [];
-    }
+    (photos) =>  photos.toJS()
 )

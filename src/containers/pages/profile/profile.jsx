@@ -20,13 +20,24 @@ class ProfileContainer extends Component {
             onFetchRelatedPhotos: PropTypes.func
         }),
         match: PropTypes.object,
-
+        userInfo: PropTypes.object,
+        userPhotos: PropTypes.object,
+        statuses: PropTypes.object,
     }
 
     componentDidMount() {
         const { actions: { onFetchUser, onFetchUserPhotos }, match: { params } } = this.props;
         onFetchUser(params.id);
         onFetchUserPhotos(params.id);
+    }
+
+    componentDidUpdate(prevProps) {
+        const { actions: { onFetchUser, onFetchUserPhotos }, match: { params } } = this.props;
+
+        if (prevProps.match.params.id !== params.id) {
+            onFetchUser(params.id);
+            onFetchUserPhotos(params.id);
+        }
     }
 
     handlerOpenModal = (id) => {
@@ -54,7 +65,7 @@ class ProfileContainer extends Component {
         } = this.props;
 
         return (
-            <AppPage>
+            <React.Fragment>
                 {
                     !isFetching && userInfo
                         ? <Profile
@@ -65,7 +76,7 @@ class ProfileContainer extends Component {
                         />
                         : <Spinner />
                 }
-            </AppPage>
+            </React.Fragment>
         );
     }
 }

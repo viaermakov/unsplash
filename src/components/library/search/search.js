@@ -1,51 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-//import classNames from 'classnames';
+import classNames from 'classnames';
 
 import './search.scss'
 
 export default class Search extends Component {
 
-    state = {
-        value: ''
-    }
-
-    handlerOnKeyPress(event){
+    handleOnKeyPress = (event) => {
         if (event.key === 'Enter') {
             // event.preventDefault();
-            this.handlerOnEnter(event);
+            this.handleOnEnter(event);
         }
     }
 
-    handlerOnChange = (event) => {
-        //const { id, onChange } = this.props;
+    handleOnChange = (event) => {
+        const { id, onChange } = this.props;
         const { value } = event.target;
-        console.log(value);
-        this.setState({ value })
-        //onChange && onChange(id, value);
+
+        onChange && onChange({id, value});
     }
 
-    handlerOnEnter = (event) => {
-        //const { id, onEnter } = this.props;
+    handleOnEnter = (event) => {
+        const { id, onEnter } = this.props;
         const { value } = event.target;
 
-       // onEnter && onEnter(id, value);
+       onEnter && onEnter(id, value);
     }
 
     render(){
-        //const classes = this.getComponentClassNames();
-        const { id, type, placeholder, disabled } = this.props;
-        const { value } = this.state;
+        const { id, type, placeholder, disabled, value, className } = this.props;
 
         return(
             <input
-                //className={ classes.component }
+                className={ classNames(className, 'search-input') }
                 id={ id ? id : null }
                 value={ value ? value : '' }
                 placeholder={ placeholder || 'Найти...' }
-                onChange={ this.handlerOnChange }
-                onKeyPress={ this.handlerOnKeyPress }
+                onChange={ this.handleOnChange }
+                onKeyPress={ this.handleOnKeyPress }
             />
         );
     }

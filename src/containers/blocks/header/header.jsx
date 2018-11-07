@@ -8,38 +8,58 @@ import Header from 'src/components/blocks/header';
 
 class HeaderContainer extends Component {
 
-    componentDidMount() {
-
+    static propTypes = {
+        history: PropTypes.object,
+        location: PropTypes.object
     }
 
-    handlerGoToHome = () => {
-        const { history, match: { params, url } } = this.props;
+    state = {
+        query: ''
+    }
 
-        if (url.indexOf("feed") === -1) {
-            history.push(`/feed`);
+    componentDidMount() {
+        const { location: { pathname } } = this.props;
+
+        if (pathname.indexOf('search') !== -1) {
+            let val = pathname.slice(pathname.indexOf('search') + 7); //подумать
+            this.setState({ query: val })
         }
     }
 
+    handleGoToHome = () => {
+        const { history, location: { pathname }  } = this.props;
+
+        this.setState({ query: '' })
+
+        if (pathname.indexOf('feed') === -1) {
+            history.push('/feed');
+        }
+    }
+
+    handleOnChange = ({ value }) => {
+        this.setState({ query: value })
+    }
+
+    handleOnEnter = () => {
+        const { history } = this.props;
+        const { query } = this.state;
+
+        history.push(`/search/${query}`);
+    }
+
     render() {
+        const { query } = this.state;
+
         return (
-            <Header {...this.props} handlerGoToHome={this.handlerGoToHome} />
+            <Header
+                handlerGoToHome={this.handleGoToHome}
+                handleOnChange={this.handleOnChange}
+                handleOnEnter={this.handleOnEnter}
+                value={query}
+            />
         );
     }
 }
-
-
-// const mapStateToProps = (state) => {
-//     return {
-//         randomPhoto: getRandomPhoto(state),
-//     }
-// }
-
-
-// const mapDispatchToProps = (dispatch) => ({
-//     actions: {
-//         onFetchPhoto: () => dispatch(fetchPhoto())
-//     }
-// })
 
 
 export default withRouter(connect(null, null)(HeaderContainer));

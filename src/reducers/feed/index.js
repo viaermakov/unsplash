@@ -49,7 +49,7 @@ export default function feedReducer(state = initialState, action) {
         case feedActions.FETCH_OTHER_ORDER_REQUEST:
             return state
                 .set('isFetching', true)
-                .set('photos', List());
+                .set('photos', Map({IDs: [], byID: {}}));
 
         case feedActions.FETCH_OTHER_ORDER_SUCCESS:
             return state

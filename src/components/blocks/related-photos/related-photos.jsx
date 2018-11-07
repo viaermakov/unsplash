@@ -10,17 +10,17 @@ import './related-photos.scss';
 export const RelatedPhotos = ({ relatedPhotos, handlerOnOpenModal }) => (
     <div className="modal-view__related__block-images">
         {
-            relatedPhotos.map((item) => {
+            relatedPhotos.IDs && relatedPhotos.IDs.length > 0 && relatedPhotos.IDs.map((id) => {
                 return (
                     <Hover
-                        id={item.id}
+                        id={relatedPhotos.byID[id].id}
                         className="modal-view__related__img"
-                        hoverElement={<DescriptionPhoto photo={item} />}
-                        key={item.id}
+                        hoverElement={<DescriptionPhoto photo={relatedPhotos.byID[id]} />}
+                        key={relatedPhotos.byID[id].id}
                         onClick={handlerOnOpenModal}
                     >
                         <RelatedPhoto
-                            {...item}
+                            {...relatedPhotos.byID[id]}
                         />
                     </Hover>
                 )
@@ -30,7 +30,7 @@ export const RelatedPhotos = ({ relatedPhotos, handlerOnOpenModal }) => (
 );
 
 RelatedPhotos.propTypes = {
-    relatedPhotos: PropTypes.array,
+    relatedPhotos: PropTypes.object,
     handlerOnLoadImage: PropTypes.func,
     handlerOnOpenModal: PropTypes.func
 }

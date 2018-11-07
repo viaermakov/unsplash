@@ -7,14 +7,22 @@ import Search from 'src/components/library/search';
 
 import './header.scss';
 
-export const Header = ({ handlerGoToHome }) => (
+export const Header = ({ value, handlerGoToHome, handleOnChange, handleOnEnter }) => (
     <header className="app-header" >
         <Logo handlerGoToHome={handlerGoToHome} />
-        <Search />
+        <Search 
+            id="search" 
+            onChange={handleOnChange} 
+            onEnter={handleOnEnter}
+            value={value}
+        />
         <Tabs />
     </header>
 )
 
 Header.propTypes = {
-    handlerGoToHome: PropTypes.func
+    value: PropTypes.string,
+    handlerGoToHome: PropTypes.func,
+    handleOnChange: PropTypes.func,
+    handleOnEnter: PropTypes.func
 }

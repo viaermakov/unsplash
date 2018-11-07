@@ -1,15 +1,11 @@
 import { createSelector } from 'reselect'
 
-const PHOTOS = (state) => state.feed.get('photos');
+const PHOTOS = (state) => state.feed.get('photos', {});
 
 export const getAllPhotos = createSelector(
     [PHOTOS],
-    (photos) => {
-        const currentPhotos = photos.toJS();
-        return currentPhotos && currentPhotos.IDs
-            ? currentPhotos.IDs.map(id => currentPhotos.byID[id])
-            : [];
-    }
+    (photos) => photos.toJS()
+
 )
 
 const FEED = (state) => state.feed;

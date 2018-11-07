@@ -60,7 +60,7 @@ export const ModalViewPhoto = ({ isIncreased, chosenPhoto, relatedPhotos, handle
 ModalViewPhoto.propTypes = {
     isIncreased: PropTypes.bool,
     chosenPhoto: PropTypes.object,
-    relatedPhotos: PropTypes.array,
+    relatedPhotos: PropTypes.object,
     handlerOnOpenModal: PropTypes.func,
     handlerIncreasePhoto: PropTypes.func
 }
