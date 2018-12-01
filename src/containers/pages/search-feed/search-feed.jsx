@@ -7,7 +7,6 @@ import { fetchSearchedPhotos, fetchMoreSearchedPhotos } from 'src/actions/search
 import { getSearchedPhotos, getSearchedLoadingStatus } from 'src/reducers/search-feed/selectors';
 
 import SearchFeed from 'src/components/pages/search-feed';
-import Feed from 'src/components/pages/feed';
 import { Spinner } from 'src/components/library/spinner/spinner';
 
 

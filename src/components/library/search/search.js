@@ -1,45 +1,55 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
 
 import './search.scss'
 
-export default class Search extends Component {
-
-    handleOnKeyPress = (event) => {
+export const Search = ({ id, className, onChange, onEnter, value, placeholder, disabled }) => {
+    const handleOnKeyPress = (event) => {
         if (event.key === 'Enter') {
-            // event.preventDefault();
-            this.handleOnEnter(event);
+            handleOnEnter(event);
         }
     }
 
-    handleOnChange = (event) => {
-        const { id, onChange } = this.props;
+    const handleOnChange = (event) => {
         const { value } = event.target;
-
-        onChange && onChange({id, value});
+        onChange && onChange({ id, value });
     }
 
-    handleOnEnter = (event) => {
-        const { id, onEnter } = this.props;
+    const handleOnEnter = (event) => {
         const { value } = event.target;
-
-       onEnter && onEnter(id, value);
+        onEnter && onEnter(id, value);
     }
 
-    render(){
-        const { id, type, placeholder, disabled, value, className } = this.props;
+    return (
+        <input
+            className={classNames(className, "search-input")}
+            id={id}
+            value={value}
+            placeholder={placeholder}
+            disabled={disabled}
+            onChange={handleOnChange}
+            onKeyPress={handleOnKeyPress}
+        />
+    )
+}
 
-        return(
-            <input
-                className={ classNames(className, 'search-input') }
-                id={ id ? id : null }
-                value={ value ? value : '' }
-                placeholder={ placeholder || 'Найти...' }
-                onChange={ this.handleOnChange }
-                onKeyPress={ this.handleOnKeyPress }
-            />
-        );
-    }
+
+Search.propTypes = {
+    id: PropTypes.string, 
+    className: PropTypes.string,
+    value: PropTypes.string, 
+    placeholder: PropTypes.string,
+    disabled: PropTypes.bool,
+    onChange: PropTypes.func, 
+    onEnter: PropTypes.func,
+}
+
+Search.defautProps = {
+    id: "default",
+    value: "",
+    placeholder: "Find...",
+    onChange: () => {},
+    onKeyPress: () => {}
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 import Layout from 'src/components/blocks/layout';
 import Header from 'src/containers/blocks/header';
 

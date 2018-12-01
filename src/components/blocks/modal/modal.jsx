@@ -6,7 +6,6 @@ import Layout from 'src/components/blocks/layout';
 
 
 export const Modal = ({ children, type, handlerOnClose }) => {
-
     const closeModal = (e) => {
         if (e.target.classList.contains("layout-overlay")) {
             handlerOnClose(e)
@@ -14,15 +13,15 @@ export const Modal = ({ children, type, handlerOnClose }) => {
     }
 
     return (
-        type == "default"
+        (type == "default")
             ? <Layout type="overlay" onClick={closeModal}>
                 <div id="modal" className={`modal modal--${type}`}>
                     {children}
                 </div>
-              </Layout>
+            </Layout>
             : <div id="modal" className={`modal modal--${type}`}>
                 {children}
-              </div>
+            </div>
     )
 };
 

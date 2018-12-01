@@ -8,7 +8,6 @@ import { getAllPhotos, getPhotosLoadingStatus } from 'src/reducers/feed/selector
 
 import SortedHeader from 'src/components/blocks/sorted-toolbar';
 import Feed from 'src/components/pages/feed';
-import AppPage from 'src/components/blocks/app';
 import { Spinner } from 'src/components/library/spinner/spinner';
 
 
@@ -35,8 +34,8 @@ class FeedContainer extends Component {
     componentDidMount() {
         const { actions: { onFetchAllPhotos } } = this.props;
         const { page, typeOrder } = this.state;
+        
         onFetchAllPhotos(page, typeOrder);
-
         window.addEventListener('scroll', this.onScroll, false);
     }
 

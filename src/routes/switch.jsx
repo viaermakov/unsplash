@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter, Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import AppPage from 'src/components/blocks/app';
 import FeedContainer from 'src/containers/pages/feed';
@@ -34,19 +34,17 @@ class ModalSwitch extends Component {
             location.state.modal &&
             this.previousLocation !== location
         );
-        
+
         return (
             <AppPage>
-                <div>
-                    <Switch location={isModal ? this.previousLocation : location}>
-                        <Route exact path="/" render={() => { return <Redirect to='/feed' /> }} />
-                        <Route path="/feed" component={FeedContainer} />
-                        <Route path="/profile/:id" component={ProfileContainer} />
-                        <Route path="/search/:query" component={SearchFeedContainer} />
-                        {!isModal && <Route path="/photo/:idPhoto" render={() => <ModalViewPhotoContainer isFull={true} />} />}
-                    </Switch>
-                    {isModal && <Route path="/photo/:idPhoto" component={ModalViewPhotoContainer} />}
-                </div>
+                <Switch location={isModal ? this.previousLocation : location}>
+                    <Route exact path="/" render={() => { return <Redirect to='/feed' /> }} />
+                    <Route path="/feed" component={FeedContainer} />
+                    <Route path="/profile/:id" component={ProfileContainer} />
+                    <Route path="/search/:query" component={SearchFeedContainer} />
+                    {!isModal && <Route path="/photo/:idPhoto" render={() => <ModalViewPhotoContainer isFull={true} />} />}
+                </Switch>
+                {isModal && <Route path="/photo/:idPhoto" component={ModalViewPhotoContainer} />}
             </AppPage>
         );
     }

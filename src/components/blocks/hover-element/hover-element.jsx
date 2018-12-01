@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import './hover-element.scss';
 
 export const Hover = ({ id, className, hoverElement, onClick, children }) => {
-    const handlerOpenModal = () =>{
+    const handlerOpenModal = () => {
         onClick && onClick(id);
     }
     return (

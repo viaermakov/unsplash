@@ -21,7 +21,7 @@ class HeaderContainer extends Component {
         const { location: { pathname } } = this.props;
 
         if (pathname.indexOf('search') !== -1) {
-            let val = pathname.slice(pathname.indexOf('search') + 7); //подумать
+            const val = pathname.slice(pathname.indexOf('search') + 7); //подумать
             this.setState({ query: val })
         }
     }
