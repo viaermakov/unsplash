@@ -84,13 +84,6 @@ module.exports = merge(common, {
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             },
-        }),
-        new WebpackMonitor({
-            capture: true, // -> default 'true'
-            target: '../monitor/myStatsStore.json', // default -> '../monitor/stats.json'
-            launch: true, // -> default 'false'
-            port: 8080, // default -> 8081
-            excludeSourceMaps: true // default 'true'
-        }),
+        })
     ],
 });
