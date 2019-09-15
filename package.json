@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "watch": "webpack --watch",
-    "init": "webpack-dev-server --mode development --inline --progress --color --hot",
-    "start": "webpack-dev-server --inline --progress --color --hot --config config/webpack.dev.js",
-    "build": "webpack --config config/webpack.common.js",
-    "build:prod": "webpack -p  --inline --progress --color --hot --config config/webpack.prod.js"
+    "dev": "webpack-dev-server --inline --progress --color --hot --config config/webpack.dev.js",
+    "build": "webpack -p  --inline --progress --color --hot --config config/webpack.prod.js",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
