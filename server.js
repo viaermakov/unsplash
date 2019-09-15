@@ -1,5 +1,4 @@
 const express = require('express');
-const favicon = require('express-favicon');
 const path = require('path');
 const compression = require("compression");
 const port = process.env.PORT || 8080;
